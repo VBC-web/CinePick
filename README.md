@@ -1,2 +1,2 @@
-# VBC
+# CinePick
 Internship projects 
