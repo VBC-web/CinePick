@@ -1,3 +1,3 @@
 # CinePick
 Internship projects 
-Author - VikasCCc
+Author - Vikas 
