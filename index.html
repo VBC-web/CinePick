@@ -91,6 +91,8 @@
       transform: translateY(60px) rotateX(10deg);
       overflow: hidden;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .movie::before {
@@ -120,12 +122,28 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
+    .movie-image-container {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 15px 15px 0 0;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+    }
+
     .movie img {
       width: 100%;
-      height: 220px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 15px 15px 0 0;
+      object-position: center;
       transition: transform 0.3s ease;
+      display: block;
+      margin: 0;
+      padding: 0;
+      border: none;
+      vertical-align: top;
     }
 
     .movie:hover img {
@@ -135,6 +153,11 @@
     .movie-content {
       padding: 1.5rem;
       background: rgba(0, 0, 0, 0.3);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      border-radius: 0 0 15px 15px;
     }
 
     .movie h3 {
@@ -165,6 +188,7 @@
       line-height: 1.6;
       color: #cccccc;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+      flex-grow: 1;
     }
 
     .rating {
@@ -252,7 +276,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1000px) {
       .movie-grid {
         gap: 2rem;
       }
@@ -267,7 +291,6 @@
       }
     }
   </style>
-  </style>
 </head>
 <body>
   <h1>🎬 CinePick 🎬</h1>
@@ -275,7 +298,9 @@
 
   <div class="movie-grid">
     <div class="movie">
-      <img src="https://m.media-amazon.com/images/I/71ZgbKiRJNL._AC_UL480_FMwebp_QL65_.jpg" alt="Inception">
+      <div class="movie-image-container">
+        <img src="https://m.media-amazon.com/images/I/71ZgbKiRJNL._AC_UL480_FMwebp_QL65_.jpg" alt="Inception">
+      </div>
       <div class="movie-content">
         <h3>Inception</h3>
         <div class="genre">Sci-Fi / Thriller</div>
@@ -286,7 +311,9 @@
     </div>
 
     <div class="movie">
-      <img src="https://m.media-amazon.com/images/I/71mmEA-2xaL._AC_UL480_FMwebp_QL65_.jpg" alt="The Shawshank Redemption">
+      <div class="movie-image-container">
+        <img src="https://m.media-amazon.com/images/I/71mmEA-2xaL._AC_UL480_FMwebp_QL65_.jpg" alt="The Shawshank Redemption">
+      </div>
       <div class="movie-content">
         <h3>The Shawshank Redemption</h3>
         <div class="genre">Drama</div>
@@ -297,7 +324,9 @@
     </div>
 
     <div class="movie">
-      <img src="https://m.media-amazon.com/images/I/61dmz9IJZRL._AC_UL480_FMwebp_QL65_.jpg" alt="Interstellar">
+      <div class="movie-image-container">
+        <img src="https://m.media-amazon.com/images/I/61dmz9IJZRL._AC_UL480_FMwebp_QL65_.jpg" alt="Interstellar">
+      </div>
       <div class="movie-content">
         <h3>Interstellar</h3>
         <div class="genre">Sci-Fi / Adventure</div>
@@ -308,7 +337,9 @@
     </div>
 
     <div class="movie">
-      <img src="https://m.media-amazon.com/images/I/719tiLnVyZL._AC_UL480_FMwebp_QL65_.jpg" alt="Parasite">
+      <div class="movie-image-container">
+        <img src="https://m.media-amazon.com/images/I/719tiLnVyZL._AC_UL480_FMwebp_QL65_.jpg" alt="Parasite">
+      </div>
       <div class="movie-content">
         <h3>Parasite</h3>
         <div class="genre">Thriller / Drama</div>
@@ -319,7 +350,9 @@
     </div>
 
     <div class="movie">
-      <img src="https://m.media-amazon.com/images/I/81RkM26bXwL._AC_UL480_FMwebp_QL65_.jpg" alt="Spirited Away">
+      <div class="movie-image-container">
+        <img src="https://m.media-amazon.com/images/I/81RkM26bXwL._AC_UL480_FMwebp_QL65_.jpg" alt="Spirited Away">
+      </div>
       <div class="movie-content">
         <h3>Spirited Away</h3>
         <div class="genre">Fantasy / Animation</div>
