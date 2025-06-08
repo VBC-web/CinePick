@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎬 CinePick 🎬</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0c0c0c 100%);
+      color: #e8e8e8;
+      padding: 2rem;
+      text-align: center;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .color-burst {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      animation: colorBurst 1.5s ease-out forwards;
+    }
+
+    @keyframes colorBurst {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.6;
+      }
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+      font-weight: 700;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: #b0b0b0;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+      z-index: 2;
+    }
+
+    .movie-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .movie {
+      background: rgba(20, 20, 30, 0.8);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      width: 300px;
+      padding: 0;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      transform: translateY(60px) rotateX(10deg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .movie::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .movie:hover::before {
+      opacity: 1;
+    }
+
+    .movie.visible {
+      opacity: 1;
+      transform: translateY(0) rotateX(0deg);
+    }
+
+    .movie:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .movie img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 15px 15px 0 0;
+      transition: transform 0.3s ease;
+    }
+
+    .movie:hover img {
+      transform: scale(1.1);
+    }
+
+    .movie-content {
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .movie h3 {
+      margin: 0 0 0.5rem;
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .movie .genre {
+      color: #4a9eff;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .movie .year {
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .movie p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cccccc;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      margin-top: 0.8rem;
+      color: #ffd700;
+      font-weight: 600;
+    }
+
+    .recommendation-section {
+      margin: 3rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      padding: 1.2rem 2.5rem;
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #c0392b, #a93226);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(231, 76, 60, 0.6);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    footer {
+      margin-top: 4rem;
+      color: #666;
+      font-size: 0.95rem;
+      opacity: 0.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    .highlighted {
+      border: 3px solid #e74c3c;
+      background: rgba(231, 76, 60, 0.2);
+      transform: translateY(-15px) scale(1.08);
+      box-shadow: 0 25px 50px rgba(231, 76, 60, 0.5);
+    }
+
+    .glow {
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { 
+        box-shadow: 0 25px 50px rgba(231, 76, 60, 0.5), 0 0 20px rgba(231, 76, 60, 0.3);
+      }
+      100% { 
+        box-shadow: 0 25px 50px rgba(231, 76, 60, 0.8), 0 0 40px rgba(231, 76, 60, 0.6);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .movie-grid {
+        gap: 2rem;
+      }
+      
+      .movie {
+        width: 100%;
+        max-width: 350px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+  </style>
+</head>
+<body>
+  <h1>🎬 CinePick 🎬</h1>
+  <p class="subtitle">Must-Watch Movies for Every Cinephile</p>
+
+  <div class="movie-grid">
+    <div class="movie">
+      <img src="https://m.media-amazon.com/images/I/81ni3V5DNfL._SL1500_.jpg" alt="Inception">
+      <div class="movie-content">
+        <h3>Inception</h3>
+        <div class="genre">Sci-Fi / Thriller</div>
+        <div class="year">2010</div>
+        <p>A mind-bending thriller that blurs the lines between dream and reality, directed by Christopher Nolan.</p>
+        <div class="rating">⭐ 8.8</div>
+      </div>
+    </div>
+
+    <div class="movie">
+      <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._SL1181_.jpg" alt="The Shawshank Redemption">
+      <div class="movie-content">
+        <h3>The Shawshank Redemption</h3>
+        <div class="genre">Drama</div>
+        <div class="year">1994</div>
+        <p>The inspiring story of hope and friendship inside a maximum-security prison.</p>
+        <div class="rating">⭐ 9.3</div>
+      </div>
+    </div>
+
+    <div class="movie">
+      <img src="https://m.media-amazon.com/images/I/71c05lTE03L._SL1500_.jpg" alt="Interstellar">
+      <div class="movie-content">
+        <h3>Interstellar</h3>
+        <div class="genre">Sci-Fi / Adventure</div>
+        <div class="year">2014</div>
+        <p>An emotional journey across galaxies to save humanity, filled with scientific brilliance and heart.</p>
+        <div class="rating">⭐ 8.6</div>
+      </div>
+    </div>
+
+    <div class="movie">
+      <img src="https://m.media-amazon.com/images/I/81QbL1VZasL._SL1500_.jpg" alt="Parasite">
+      <div class="movie-content">
+        <h3>Parasite</h3>
+        <div class="genre">Thriller / Drama</div>
+        <div class="year">2019</div>
+        <p>A darkly comedic and chilling look at class divide, this Oscar-winner is a masterclass in storytelling.</p>
+        <div class="rating">⭐ 8.5</div>
+      </div>
+    </div>
+
+    <div class="movie">
+      <img src="https://m.media-amazon.com/images/I/91IvuXoDAjL._SL1500_.jpg" alt="Spirited Away">
+      <div class="movie-content">
+        <h3>Spirited Away</h3>
+        <div class="genre">Fantasy / Animation</div>
+        <div class="year">2001</div>
+        <p>A magical coming-of-age story set in a surreal spirit world, created by Studio Ghibli.</p>
+        <div class="rating">⭐ 8.6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recommendation-section">
+    <button onclick="recommendMovie()">🎥 Recommend a Movie</button>
+  </div>
+
+  <footer>
+    <p>Created with 🎞️ by Sahil Godambe • Movie Discovery Project • June 2025</p>
+  </footer>
+
+  <script>
+    const movieList = [
+      { name: "Inception", index: 0 },
+      { name: "The Shawshank Redemption", index: 1 },
+      { name: "Interstellar", index: 2 },
+      { name: "Parasite", index: 3 },
+      { name: "Spirited Away", index: 4 }
+    ];
+
+    const movieElements = document.querySelectorAll('.movie');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    movieElements.forEach(movie => observer.observe(movie));
+
+    function recommendMovie() {
+      const randomPick = movieList[Math.floor(Math.random() * movieList.length)];
+      const selected = movieElements[randomPick.index];
+      selected.classList.add('highlighted', 'glow');
+      alert("Tonight's pick: 🎬 " + randomPick.name);
+      setTimeout(() => {
+        selected.classList.remove('highlighted', 'glow');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
